@@ -46,50 +46,9 @@ app = dash.Dash(__name__)
 
 app.layout = html.Div([
     dcc.Tabs(id="tabs", children=[
-        dcc.Tab(label='Hour', children=[
-            html.Div([
-                dcc.Graph(
-                    id='example-graph',
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3], 'y': [4, 1, 2],
-                                'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [2, 4, 5],
-                             'type': 'bar', 'name': u'Montréal'},
-                        ]
-                    }
-                )
-            ])
-        ]),
-        dcc.Tab(label='Date', children=[
-                dcc.Graph(
-                    id='example-graph-1',
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3], 'y': [1, 4, 1],
-                                'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [1, 2, 3],
-                             'type': 'bar', 'name': u'Montréal'},
-                        ]
-                    }
-                )
-        ]),
-        dcc.Tab(label='Time', children=[
-                dcc.Graph(
-                    id='example-graph-2',
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3], 'y': [2, 4, 3],
-                                'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [5, 4, 3],
-                             'type': 'bar', 'name': u'Montréal'},
-                        ]
-                    }
-                )
-        ]),
         dcc.Tab(label='Duration', children=[
                 dcc.Graph(
-                    id='example-graph-3',
+                    id='example-graph-1',
                     figure={
                         'data': [
                             {'x': [1, 2, 3], 'y': [2, 4, 3],
@@ -102,7 +61,7 @@ app.layout = html.Div([
         ]),
         dcc.Tab(label='Agent', children=[
                 dcc.Graph(
-                    id='example-graph-4',
+                    id='example-graph-2',
                     figure={
                         'data': [
                             {'x': [1, 2, 3], 'y': [2, 4, 3],
@@ -115,7 +74,7 @@ app.layout = html.Div([
         ]),
         dcc.Tab(label='Call Type', children=[
                 dcc.Graph(
-                    id='example-graph-5',
+                    id='example-graph-3',
                     figure={
                         'data': [
                             {'x': [1, 2, 3], 'y': [2, 4, 3],
@@ -128,7 +87,20 @@ app.layout = html.Div([
         ]),
         dcc.Tab(label='Caller ID', children=[
                 dcc.Graph(
-                    id='example-graph-6',
+                    id='example-graph-4',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [2, 4, 3],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [5, 4, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ]),
+        dcc.Tab(label='Date and Time', children=[
+                dcc.Graph(
+                    id='example-graph-5',
                     figure={
                         'data': [
                             {'x': [1, 2, 3], 'y': [2, 4, 3],
@@ -139,6 +111,7 @@ app.layout = html.Div([
                     }
                 )
         ])
+
     ])
 ])
 
