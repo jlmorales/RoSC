@@ -43,84 +43,109 @@ df['index'] = range(1, len(df) + 1)
 
 app = dash.Dash(__name__)
 
+
 app.layout = html.Div([
-    html.H1("Call counts by Hour", style={"textAlign": "center"}),
-    html.Div([
-        html.Div([
-            dcc.Dropdown(
-                id='product-selected1',
-                options=[{'label': i.title(), 'value': i} for i in df.columns.values[1:7]],
-                value="Callers/Called Number")], className="six columns", style={"width": "40%", "float": "right"}),
-        html.Div([
-            dcc.Dropdown(
-                id='product-selected2',
-                options=[{'label': i.title(), 'value': i} for i in df.columns.values[1:7]],
-                value='Number Called')], className="six columns", style={"width": "40%", "float": "left"}),
+    dcc.Tabs(id="tabs", children=[
+        dcc.Tab(label='Hour', children=[
+            html.Div([
+                dcc.Graph(
+                    id='example-graph',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [4, 1, 2],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [2, 4, 5],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+            ])
+        ]),
+        dcc.Tab(label='Date', children=[
+                dcc.Graph(
+                    id='example-graph-1',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [1, 4, 1],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [1, 2, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ]),
+        dcc.Tab(label='Time', children=[
+                dcc.Graph(
+                    id='example-graph-2',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [2, 4, 3],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [5, 4, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ]),
+        dcc.Tab(label='Duration', children=[
+                dcc.Graph(
+                    id='example-graph-3',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [2, 4, 3],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [5, 4, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ]),
+        dcc.Tab(label='Agent', children=[
+                dcc.Graph(
+                    id='example-graph-4',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [2, 4, 3],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [5, 4, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ]),
+        dcc.Tab(label='Call Type', children=[
+                dcc.Graph(
+                    id='example-graph-5',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [2, 4, 3],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [5, 4, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ]),
+        dcc.Tab(label='Caller ID', children=[
+                dcc.Graph(
+                    id='example-graph-6',
+                    figure={
+                        'data': [
+                            {'x': [1, 2, 3], 'y': [2, 4, 3],
+                                'type': 'bar', 'name': 'SF'},
+                            {'x': [1, 2, 3], 'y': [5, 4, 3],
+                             'type': 'bar', 'name': u'Montréal'},
+                        ]
+                    }
+                )
+        ])
+    ])
+])
 
-    ], className="row", style={"padding": 50, "width": "60%", "margin-left": "auto", "margin-right": "auto"}),
-    dcc.Graph(id='my-graph')
-
-], className="container")
 
 
-@app.callback(
-    dash.dependencies.Output('my-graph', 'figure'),
-    [dash.dependencies.Input('product-selected1', 'value'),
-     dash.dependencies.Input('product-selected2', 'value')])
-def update_graph(selected_product1, selected_product2):
-    dff = df[(df[selected_product1] >= 0) & (df[selected_product2] >= 0)]
 
-    trace1 = go.Bar(
-        x=dff['index'],
-        y=dff[selected_product1],
-        name=selected_product1.title(),
-        marker={
 
-        }
-    )
-    trace2 = go.Bar(
-        x=dff['index'],
-        y=dff[selected_product2],
-        name=selected_product2.title(),
-        marker={
-
-        }
-    )
-
-    return {
-        'data': [trace1, trace2],
-        'layout': go.Layout(
-            title=f'Calls vs Hour: {selected_product1.title()}, {selected_product2.title()}',
-            colorway=["#EF963B", "#EF533B"],
-            hovermode="closest",
-            xaxis={
-                'title': "Hour",
-                'titlefont': {
-                    'color': 'black',
-                    'size': 14},
-                'tickfont': {
-                    'size': 9,
-                    'color': 'black'
-
-                }
-            },
-            yaxis={
-                'title': "Count",
-                'titlefont': {
-                    'color': 'black',
-                    'size': 14,
-
-                },
-
-                'tickfont': {
-                    'color': 'black'
-
-                }
-            }
-
-        )
-
-    }
 
 
 server = app.server
