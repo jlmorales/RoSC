@@ -5,7 +5,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
-import plotly.graph_objs as go
+from datetime import datetime as dt
 
 
 # df = pd.read_csv(
@@ -109,9 +109,21 @@ app.layout = html.Div([
                              'type': 'bar', 'name': u'Montréal'},
                         ]
                     }
+                ),
+                dcc.RangeSlider(
+                    marks={i: '{} :00'.format(i) for i in range(0, 24)},
+                    min=-0,
+                    max=23,
+                    value=[0, 23]
+                ),
+                html.Br(),
+                html.Br(),
+                dcc.DatePickerRange(
+                    id='date-picker-range',
+                    start_date=dt(2010, 1, 1),
+                    end_date_placeholder_text='Select a date!'
                 )
         ])
-
     ])
 ])
 
