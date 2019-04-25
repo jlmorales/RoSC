@@ -46,33 +46,7 @@ app = dash.Dash(__name__)
 
 app.layout = html.Div([
     dcc.Tabs(id="tabs", children=[
-        dcc.Tab(label='Duration', children=[
-                dcc.Graph(
-                    id='example-graph-1',
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3], 'y': [2, 4, 3],
-                                'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [5, 4, 3],
-                             'type': 'bar', 'name': u'Montréal'},
-                        ]
-                    }
-                )
-        ]),
-        dcc.Tab(label='Agent', children=[
-                dcc.Graph(
-                    id='example-graph-2',
-                    figure={
-                        'data': [
-                            {'x': [1, 2, 3], 'y': [2, 4, 3],
-                                'type': 'bar', 'name': 'SF'},
-                            {'x': [1, 2, 3], 'y': [5, 4, 3],
-                             'type': 'bar', 'name': u'Montréal'},
-                        ]
-                    }
-                )
-        ]),
-        dcc.Tab(label='Call Type', children=[
+        dcc.Tab(label='Call Received', children=[
                 dcc.Graph(
                     id='example-graph-3',
                     figure={
@@ -83,9 +57,22 @@ app.layout = html.Div([
                              'type': 'bar', 'name': u'Montréal'},
                         ]
                     }
+                ),
+                dcc.RangeSlider(
+                    marks={i: '{} :00'.format(i) for i in range(0, 24)},
+                    min=-0,
+                    max=23,
+                    value=[0, 23]
+                ),
+                html.Br(),
+                html.Br(),
+                dcc.DatePickerRange(
+                    id='call-received-status',
+                    start_date=dt(2010, 1, 1),
+                    end_date_placeholder_text='Select a date!'
                 )
         ]),
-        dcc.Tab(label='Caller ID', children=[
+        dcc.Tab(label='Agent Status', children=[
                 dcc.Graph(
                     id='example-graph-4',
                     figure={
@@ -96,9 +83,22 @@ app.layout = html.Div([
                              'type': 'bar', 'name': u'Montréal'},
                         ]
                     }
+                ),
+                dcc.RangeSlider(
+                    marks={i: '{} :00'.format(i) for i in range(0, 24)},
+                    min=-0,
+                    max=23,
+                    value=[0, 23]
+                ),
+                html.Br(),
+                html.Br(),
+                dcc.DatePickerRange(
+                    id='agent-working-status',
+                    start_date=dt(2010, 1, 1),
+                    end_date_placeholder_text='Select a date!'
                 )
         ]),
-        dcc.Tab(label='Date and Time', children=[
+        dcc.Tab(label='Agent Working', children=[
                 dcc.Graph(
                     id='example-graph-5',
                     figure={
@@ -119,7 +119,7 @@ app.layout = html.Div([
                 html.Br(),
                 html.Br(),
                 dcc.DatePickerRange(
-                    id='date-picker-range',
+                    id='agent-working-datepicker',
                     start_date=dt(2010, 1, 1),
                     end_date_placeholder_text='Select a date!'
                 )
