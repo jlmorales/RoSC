@@ -6,7 +6,9 @@ import dash_html_components as html
 import pandas as pd
 import plotly.graph_objs as go
 import pandas as pd
+import time
 from datetime import datetime as dt
+from dash.dependencies import Input, Output
 
 
 def readAndClean(filepath, col):
@@ -30,26 +32,13 @@ dataframe = readAndClean(filepath1,'Activity Time')
 df = processData(dataframe, 'Activity Time', '2019-02-02')
 
 
-
 pv = pd.pivot_table(df, index= ["by_hour"],  columns='Activity Detail', margins=False, aggfunc='count', fill_value=0)
-
 status = list(set(list(df['Activity Detail'].T)))
-
 trace = []
-
 for i in range(len(status)):
     trace.append (go.Bar(x=pv.index, y=pv['Agent Name'][status[i]] , name= status[i]))
 
-
-
-
-
 app = dash.Dash(__name__)
-
-
-
-
-
 
 app.layout = html.Div(children=[
     html.H1(children='Agent Activity Report'),
@@ -60,12 +49,30 @@ app.layout = html.Div(children=[
             'data': trace,
             'layout':
             go.Layout(title='Activity State Count vs Hour', barmode='stack')
-        })
+        }),
+    dcc.RangeSlider(
+        id = 'slider',
+        min = 0,
+        max = 23,
+        value = [0,23],
+        marks = {i: str(i) for i in range(0,24)}
+    )
 ])
 
-
-
-
+@app.callback(Output('example-graph', 'figure'),
+             [Input('slider', 'value')])
+def update_figure(X):
+    print(X)
+    pv2 = pv[int(X[0]):int(X[1])]
+    status2 = list(set(list(df['Activity Detail'].T)))
+    trace_1 = []
+    for i in range(len(status2)):
+        trace_1.append(go.Bar(x=pv2.index, y=pv2['Agent Name'][status2[i]] , name= status2[i]))
+    print(trace_1)
+    return {
+        'data' : trace_1,
+        'layout': go.Layout(title='Activity State Count vs Hour', barmode='stack')
+    }
 
 server = app.server
 
