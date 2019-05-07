@@ -112,6 +112,10 @@ app.layout = html.Div([
     [dash.dependencies.Input('product-selected1', 'value'),
      dash.dependencies.Input('product-selected2', 'value')])
 def update_graph(selected_product1, selected_product2):
+    print(selected_product1)
+    print(selected_product2)
+    print(df)
+    print(df2)
     dff = df[(df[selected_product1] >= 0)]
     dff2 = df2[ (df2[selected_product2] >= 0)]
     trace1 = go.Bar(
